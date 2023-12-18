@@ -19,7 +19,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
 app.use("/api/user" ,UserRoute)
 app.use("/api/auth" ,authRoute)
-
+app.use((err,req,res,next)=>{
+    const statusCode=err.statusCode ||500;
+    const statusMessage=err.message ||"internal server error";
+    return res.status(statusCode).json(
+      {success:false,
+        statusCode,
+      statusMessage}
+      );
+    })
 
 
 app.listen(3000,()=>{
