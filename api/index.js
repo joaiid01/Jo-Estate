@@ -1,8 +1,9 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import bodyParser from "body-parser"
 import UserRoute from "../api/route/user.route.js"
-
+import authRoute from "../api/route/auth.route.js"
 dotenv.config();
 
 mongoose.connect(process.env.MONGO)
@@ -13,8 +14,11 @@ mongoose.connect(process.env.MONGO)
   console.error('Error connecting to MongoDB ', error);
 });
 const app=express();
-
+app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); 
 app.use("/api/user" ,UserRoute)
+app.use("/api/auth" ,authRoute)
 
 
 
