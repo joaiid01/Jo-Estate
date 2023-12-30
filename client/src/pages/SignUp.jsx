@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import {Link ,useNavigate} from 'react-router-dom';
+import AOuth from "../components/OAuth";
 export default function SignUp() {
   const [formData,setFormData]=useState({});
  const [Loading,setLoading]=useState(false);
@@ -60,6 +61,7 @@ catch(error){
         <input className='border  p-3 rounded-lg' type='email' placeholder='email' id='email' onChange={handleChange}></input>
         <input className='border  p-3 rounded-lg' type='password' placeholder='password' id='password' onChange={handleChange}></input>
         <button  disabled={Loading} className=' bg-slate-700 text-white  p-3 rounded uppercase hover:opacity-95 disabled:opacity-80' >{Loading?"Loading...":"Sign Up"}</button>
+     <AOuth/>
       </form>
       
       <div className='flex gap-2 mt-5'>

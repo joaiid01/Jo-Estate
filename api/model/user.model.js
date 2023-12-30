@@ -15,8 +15,13 @@ const UserSchema=new  Mongoose.Schema({
     password:{
         type:String,
         require:true,
-    
     },
+        avater:{
+            type:String,
+            default:"https://pixabay.com/vectors/blank-profile-picture-mystery-man-973460/"
+        }
+    
+   
    } ,{timestamps:true})
 
    const User=  Mongoose.model("User",UserSchema);
