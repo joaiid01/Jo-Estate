@@ -24,6 +24,7 @@ export const signUp= async (req,res,next)=>{
 export const signin= async (req,res,next)=>{
     const {email,password}=req.body;
     try{
+      console.log(req.body);
      const validUser= await User.findOne({email:email})
         if(!validUser)return next(errorHandler(404,"user not found"))
       const validPassword=bcryptjs.compareSync(password,validUser.password)
@@ -38,25 +39,25 @@ export const signin= async (req,res,next)=>{
         next(errorHandler(550,"error from handler"));
       }
   }
-  export const google= async(req,res,next)=>{
-
-try{
+export const google= async(req,res,next)=>{
+    
+  try{ 
+  
 const findUser= await User.findOne({email:req.body.email})
 if(findUser){
-  const token=jwt.sign({id:validUser._id},process.env.JWT)
+  const token=jwt.sign({id:findUser._id},process.env.JWT)
   const {password:pass, ...rest}=findUser._doc;
   res.cookie('access_token',token,{httpOnly:true}).status(200).json(rest)
 }else{
-
  const generatePassword= Math.random().toString(36).slice(-8)+Math.random().toString(36).slice(-8);
+const hashPassword= bcryptjs.hashSync(generatePassword, 10);
+const us=req.body.username.split(" ").join("").toLowerCase()+Math.random().toString(36).slice(-4)
+const newuser=  new User({username:us,email:req.body.email,password:hashPassword, avater:req.body.photo})
+const saveUser=await newuser.save()
+const token=jwt.sign({id:newuser._id},process.env.JWT)
+const {password:pass, ...rest}=newuser._doc;
 
- const hashPassword=bcryptjs.hashSync(generatePassword,10);
-const user= new User({username:req.body.name.split(" ").join("").toLowerCase()+Math.random().toString(36).slice(-8),email:req.body.email,password:hashPassword, avater:photo})
-await user.save();
-const token=jwt.sign({id:validUser._id},process.env.JWT)
-const {password:pass, ...rest}=findUser._doc;
 res.cookie('access_token',token,{httpOnly:true}).status(200).json(rest)
-
 }
 }catch(error){
 
