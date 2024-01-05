@@ -49,7 +49,7 @@ const handleFileUpload=()=>{
       <h1 className='font-semibold text-3xl text-center my-7'>profile</h1>
    <form className='flex flex-col gap-4'>  
    <input  onChange={(e)=>setfile(e.target.files[0])} type='file' ref={fileRef} accept='image/*' hidden/>
-   <img onClick={()=>fileRef.current.click()} className='self-center  rounded-full h-24 w-24 object-cover cursor-pointer mt-2' src={currentUser.avater} alt='profile'/>
+   <img onClick={()=>fileRef.current.click()} className='self-center  rounded-full h-24 w-24 object-cover cursor-pointer mt-2' src={formData.avatar||currentUser.avater} alt='profile'/>
    <p className='self-center text-sm'>{fileUploadError?<span className='text-red-700'>file upload error</span>:filePerc>0&&filePerc<100? <span className='text-slate-700'>Image must be less than 2mb{filePerc}%</span>:filePerc==100?<span className='text-green-700'>Image uploaded successfully</span>:<span></span>}</p>
    <input type='text' placeholder='username' id='username' className='border p-3 rounded-lg'  />
    <input type='text' placeholder='email' id='email' className='border p-3 rounded-lg'  />
